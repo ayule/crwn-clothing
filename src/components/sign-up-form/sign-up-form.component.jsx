@@ -3,6 +3,7 @@ import { useState } from 'react';
 import {
   createAuthUserWithEmailAndPassword,
   createUserDocumentFromAuth,
+  signInWithGooglePopup,
 } from '../../utils/firebase/firebase.utils';
 
 import FormInput from '../form-input/form-input.component';
@@ -23,6 +24,10 @@ const SignUpForm = () => {
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
+  };
+
+  const signInWithGoogle = async () => {
+    await signInWithGooglePopup();
   };
 
   const handleChange = (event) => {
@@ -54,10 +59,11 @@ const SignUpForm = () => {
       }
     }
   };
+
   return (
     <div className="sign-up-container">
       <h2>Don't have an account?</h2>
-      <span>Sign up with your email and password</span>
+      <span>Sign up with your email and password or Google account</span>
       <form onSubmit={handleSubmit}>
         <FormInput
           label="Display Name"
@@ -91,7 +97,12 @@ const SignUpForm = () => {
           name="confirmPassword"
           value={confirmPassword}
         />
-        <Button type="submit">Sign Up</Button>
+        <div className="buttons-container">
+          <Button type="submit">Sign Up</Button>
+          <Button type="button" onClick={signInWithGoogle} buttonType="google">
+            Google Sign Up
+          </Button>
+        </div>
       </form>
     </div>
   );
